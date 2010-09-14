@@ -1,32 +1,34 @@
 # -*- Makefile -*- for maintenance of ~/prj/youngman_wedding
 
 
-UPLOAD = speech.tex speech.ps speech.pdf Makefile running_order.org
-
-
 ifdef debug
 Q = 
 else
 Q = @
 endif
 
-speech.pdf: speech.tex
+
+all: speech.pdf speech.ps
 
 
 %.pdf: %.tex
 	$(Q)pdftex $<
 
-
 %.dvi: %.tex
 	$(Q)tex $<
-
 
 %.ps: %.dvi
 	$(Q)dvips $<
 
+
+.PHONY += commit
+commit:
+	git commit
+
+
 .PHONY += upload
 upload:
-	git 
+	git push origin master
 
 
 .PHONY += clean
